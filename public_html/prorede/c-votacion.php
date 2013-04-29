@@ -285,7 +285,7 @@ if (($_GET['a'] == 'verificacion') AND ($_GET['b']) AND (isset($pol['user_ID']))
 	$tipos_array = nucleo_acceso('print');
 	unset($tipos_array['anonimos']);
 	foreach ($tipos_array AS $at => $at_var) {
-		$txt .= '<option value="'.$at.'"'.$sel['acceso_votar'][$at].' />'.ucfirst(str_replace("_", " ", $at)).'</option>';
+		$txt .= '<option value="'.$at.'"'.$sel['acceso_votar'][$at].' />'._(ucfirst(str_replace("_", " ", $at))).'</option>';
 	}
 
 	$txt .= '</select><br />
@@ -302,7 +302,7 @@ if (($_GET['a'] == 'verificacion') AND ($_GET['b']) AND (isset($pol['user_ID']))
 
 	$tipos_array = nucleo_acceso('print');
 	foreach ($tipos_array AS $at => $at_var) {
-		$txt .= '<option value="'.$at.'"'.$sel['acceso_ver'][$at].' />'.ucfirst(str_replace("_", " ", $at)).'</opcion>';
+		$txt .= '<option value="'.$at.'"'.$sel['acceso_ver'][$at].' />'._(ucfirst(str_replace("_", " ", $at))).'</option>';
 	}
 
 	$txt .= '</select><br />
@@ -336,7 +336,7 @@ if (($_GET['a'] == 'verificacion') AND ($_GET['b']) AND (isset($pol['user_ID']))
 <fieldset><legend>'._('Opciones de voto').'</legend>
 <p>
 <ul style="margin-bottom:-16px;">
-<li><input type="text" name="respuesta0" size="22" value="En Blanco" readonly="readonly" style="color:grey;" /> &nbsp; <a href="#" id="a_opciones" onclick="opcion_nueva();return false;">'._('Añadir opción').'</a></li>
+<li><input type="text" name="respuesta0" size="22" value="'._('En Blanco').'" readonly="readonly" style="color:grey;" /> &nbsp; <a href="#" id="a_opciones" onclick="opcion_nueva();return false;">'._('Añadir opción').'</a></li>
 </ul>
 <ol id="li_opciones" style="margin-top:10px;">';
 
@@ -352,7 +352,7 @@ if (($_GET['a'] == 'verificacion') AND ($_GET['b']) AND (isset($pol['user_ID']))
 	foreach ($respuestas AS $ID => $respuesta) {
 		if ($respuesta != '') {
 			$respuestas_num++;
-			$txt .= '<li><input type="text" name="respuesta'.$respuestas_num.'" size="80" maxlength="250" value="'.$respuesta.'" /></li>';
+			$txt .= '<li><input type="text" name="respuesta'.$respuestas_num.'" size="80" maxlength="250" value="'._($respuesta).'" /></li>';
 		}
 	}
 
@@ -684,7 +684,7 @@ FROM votacion_votos WHERE ref_ID = '".$r['ID']."' AND comprobante IS NOT NULL".(
 '.($r['acceso_ver']=='anonimos'&&((!isset($pol['user_ID'])) || ($r['ha_votado']) || ($r['estado']=='end'))?'<center><table border="0">
 <tr>
 '.(!isset($pol['user_ID'])?'<td>'.boton(_('¡Crea tu ciudadano para votar!'), REGISTRAR.'?p='.PAIS, false, 'large green').' '.boton(_('Iniciar sesión'), REGISTRAR.'login.php?r='.base64_encode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), false, 'large blue').'</td>':'').'
-<td nowrap="nowrap"><b style="font-size:20px;color:#777;">¡'._('Difunde').' '.($r['estado']=='end'?_('este resultado'):_('esta votación')).'!</b> &nbsp;</td>
+<td nowrap="nowrap"><b style="font-size:20px;color:#777;">'._('¡Difunde').' '.($r['estado']=='end'?_('este resultado'):_('esta votación')).'!</b> &nbsp;</td>
 
 <td width="140" height="35">
 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://'.HOST.'/votacion/'.$r['ID'].'" data-text="'.($r['estado']=='ok'?_('VOTACIÓN'):_('RESULTADO')).': '.substr($r['pregunta'], 0, 83).'" data-lang="es" data-size="large" data-related="AsambleaVirtuaI" data-hashtags="15M">Twittear</a>

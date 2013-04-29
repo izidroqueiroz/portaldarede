@@ -44,7 +44,7 @@ $(document).ready(function(){
 		$(this).find('li').has('ul').addClass('has-menu')
 		.append('<span class="arrow">&nbsp;</span>');
 	});
-	
+
 	$('ul.menu li').hover(function(){
 		$(this).find('ul:first').stop(true, true).show();
 		$(this).addClass('hover');
@@ -53,8 +53,8 @@ $(document).ready(function(){
 		$(this).find('ul').stop(true, true).hide();
 		$(this).removeClass('hover');
 	});
-	
-	
+
+
 	/*---------------------------------
 		ScrollTo/LocalScroll
 	-----------------------------------*/
@@ -63,7 +63,7 @@ $(document).ready(function(){
 		lazy: true,
 		hash: true
 	});
-	
+
 	/*---------------------------------
 		Slideshow
 	-----------------------------------*/
@@ -72,18 +72,18 @@ $(document).ready(function(){
 	.each(function(){
 		var wrap = $(this).parents('.slideshow-wrap');
 		var inner = $(this).parents('.slideshow-inner');
-		
+
 		// set height and width
 		var swidth = $(this).attr('width');
 		var sheight = $(this).attr('height');
 		if(swidth != undefined && sheight != undefined){wrap.width(swidth); inner.height(sheight);}
 		$(this).width('999em').attr('width','').attr('height','');
-	
+
 		$(this).find('li:first').addClass('current');
 		$(this).delay(2000).animate({alpha:1}, function(){
 			KSslideshow($(this), null);
 		});
-		
+
 		// add navigation buttons
 		var items = $(this).find('li');
 		wrap.append('<ul class="slideshow-buttons"></ul>');
@@ -91,7 +91,7 @@ $(document).ready(function(){
 			wrap.find('.slideshow-buttons')
 			.append('<li><a href="#slideshow-'+index+'" rel="'+index+'">'+(index+1)+'</a></li>');
 		});
-		
+
 		// stop play button
 		wrap.find('.slideshow-buttons')
 		.append('<li class="slideshow-stop"><a href="#slideshow-stop">Stop</a></li>');
@@ -102,7 +102,7 @@ $(document).ready(function(){
 			var slideshow = $(this).parents('.slideshow-wrap').find('ul.slideshow');
 			KSslideshow(slideshow, next);
 		});
-		
+
 		// button events
 		$('.slideshow-buttons li:first').addClass('current');
 		wrap.find('.slideshow-buttons li').not('.slideshow-stop').find('a').click(function(e){
@@ -113,18 +113,18 @@ $(document).ready(function(){
 			KSslideshow(slideshow, next);
 		});
 	});
-	
+
 	// run slideshow
 	function KSslideshow(slideshow, next){
 		var wrap = slideshow.parents('.slideshow-wrap');
 		var inner = slideshow.parents('.slideshow-inner');
 		var current = slideshow.find('li.current');
 		var nav = slideshow.parents('.slideshow-wrap').find('.slideshow-buttons li');
-		var sstop = nav.filter('.slideshow-stop');	
-		
+		var sstop = nav.filter('.slideshow-stop');
+
 		// next slide
 		if(next == null){
-			next = current.next();		
+			next = current.next();
 			if(next.length < 1){ next = slideshow.find('li:first'); }
 			wrap.removeClass('paused');
 			sstop.find('a').html('Stop');
@@ -132,7 +132,7 @@ $(document).ready(function(){
 			wrap.addClass('paused');
 			sstop.find('a').html('Play');
 		}
-		
+
 		// scroll
 		var scrollEffect = inner.scrollTo(next, 1000);
 		current.removeClass('current');
@@ -142,17 +142,17 @@ $(document).ready(function(){
 			if(wrap.hasClass('paused')== false){ KSslideshow(slideshow, null);  }
 		});
 	}
-	
+
 	/*---------------------------------
 		HTML5 Placeholder Support
 	-----------------------------------*/
 	$('input[placeholder], textarea[placeholder]').placeholder();
-	
+
 	/*---------------------------------
 		SELECT MENUS - CHOSEN
 	-----------------------------------*/
 	$('select.fancy').chosen();
-	
+
 	/*---------------------------------
 		MEDIA
 	-----------------------------------*/
@@ -160,14 +160,14 @@ $(document).ready(function(){
 	$('a.video-placeholder').each(function(){
 		$(this).append('<span class="icon x-large white" data-icon="&nbsp;"></span>');
 	});
-	
+
 	// calendar
 	$('.calendar').each(function(){
 		if($(this).attr('data-month')){ cMonth = $(this).attr('data-month'); }
 		if($(this).attr('data-year')){ cYear = $(this).attr('data-year'); }
 		$(this).calendarWidget({month:cMonth, year: cYear});
 	});
-	
+
 	/*---------------------------------
 		Fancybox Lightbox
 	-----------------------------------*/
@@ -178,13 +178,13 @@ $(document).ready(function(){
 			overlayColor: '#000'
 		});
 	});
-	
+
 	// lightbox links
 	$('a.lightbox').fancybox({
 		overlayOpacity: 0.2,
 		overlayColor: '#000'
 	});
-	
+
 	/*---------------------------------
 		Tabs
 	-----------------------------------*/
@@ -196,7 +196,7 @@ $(document).ready(function(){
 		current = $(this).find('li.current a').attr('href');
 		$(current).show();
 	});
-	
+
 	// tab click
 	$('ul.tabs a[href^="#"]').live('click', function(e){
 		e.preventDefault();
@@ -209,7 +209,7 @@ $(document).ready(function(){
 		$(tab_next).show();
 		return false;
 	});
-	
+
 	/*---------------------------------
 		Image Style Helpers
 	-----------------------------------*/
@@ -224,7 +224,7 @@ $(document).ready(function(){
 			.css('width', $(this).width());
 		$(this).attr('class','').hide();
 	});
-	
+
 	/*---------------------------------
 		Image Caption
 	-----------------------------------*/
@@ -233,12 +233,12 @@ $(document).ready(function(){
 		$(this).parents('div.caption')
 			.attr('class', 'caption '+$(this).attr('class'))
 			.css('width', $(this).width()+'px');
-		if($(this).attr('title')){ 
+		if($(this).attr('title')){
 			$(this).parents('div.caption')
 			.append('<span>'+$(this).attr('title')+'</span>');
 		}
 	});
-	
+
 	/*---------------------------------
 		Notice
 	-----------------------------------*/
@@ -248,38 +248,38 @@ $(document).ready(function(){
 		$(this).hide();
 		notice.fadeOut('slow');
 	});
-	
+
 	/*---------------------------------
 		ToolTip - TipTip
-	-----------------------------------*/	
-	
+	-----------------------------------*/
+
 	// Standard tooltip
 	$('.tooltip, .tooltip-top, .tooltip-bottom, .tooltip-right, .tooltip-left').each(function(){
-		// variables 
+		// variables
 		var tpos = 'top';
 		var content = $(this).attr('title');
 		var dataContent = $(this).attr('data-content');
 		var keepAlive = false;
 		var action = 'hover';
-		
+
 		// position
 		if($(this).hasClass('tooltip-top'))	{ tpos = 'top'; 	}
 		if($(this).hasClass('tooltip-right'))	{ tpos = 'right'; 	}
 		if($(this).hasClass('tooltip-bottom'))	{ tpos = 'bottom'; 	}
 		if($(this).hasClass('tooltip-left'))	{ tpos = 'left'; 	}
-		
+
 		// content
 		$('.tooltip-content').removeClass('hide').wrap('<div class="hide"></div>');
 		if(dataContent){ content = $(dataContent).html(); keepAlive = true; }
-		
+
 		// action (hover or click)defaults to hover
 		if($(this).attr('data-action')== 'click'){ action = 'click'; }
-		
+
 		// tooltip
 		$(this).attr('title','')
 		.tipTip({defaultPosition: tpos, content: content, keepAlive: keepAlive, activation: action});
 	});
-	
+
 	/*---------------------------------
 		Table Sort
 	-----------------------------------*/
@@ -295,16 +295,16 @@ $(document).ready(function(){
 		// update arrow icon
 		$(this).parents('table.sortable').find('span.arrow').remove();
 		$(this).append('<span class="arrow"></span>');
-	
+
 		// sort direction
 		var nr = $(this).attr('rel');
 		aAsc[nr] = aAsc[nr]=='asc'?'desc':'asc';
 		if(aAsc[nr] == 'desc'){ $(this).find('span.arrow').addClass('up'); }
-		
+
 		// sort rows
 		var rows = $(this).parents('table.sortable').find('tbody tr');
 		rows.tsort('td:eq('+nr+')',{order:aAsc[nr],attr:'value'});
-		
+
 		// fix row classes
 		rows.removeClass('alt first last');
 		var table = $(this).parents('table.sortable');
@@ -312,7 +312,7 @@ $(document).ready(function(){
 		table.find('tr:first').addClass('first');
 		table.find('tr:last').addClass('last');
 	});
-	
+
 	/*---------------------------------
 		Icons
 	-----------------------------------*/
@@ -320,7 +320,7 @@ $(document).ready(function(){
 		$(this).append('<span aria-hidden="true">'+$(this).attr('data-icon')+'</span>')
 		.css('display', 'inline-block');
 	});
-	
+
 	/*---------------------------------
 		CSS Helpers
 	-----------------------------------*/
@@ -337,7 +337,7 @@ $(document).ready(function(){
 	$('hr').before('<div class="clear">&nbsp;</div>');
 	$('[class*=col_]').not('input, label').addClass('column').wrapInner('<div class="inner">');
 	$('pre').addClass('prettyprint');prettyPrint();
-	
+
 });
 
 /**
@@ -379,10 +379,10 @@ a.focus(function(){if(this.value==""){var a=this.createTextRange();a.collapse(!0
  * Simple and fancy lightbox alternative
  *
  * Examples and documentation at: http://fancybox.net
- * 
+ *
  * Copyright (c)2008 - 2010 Janis Skarnelis
  * That said, it is hardly a one-person project. Many people have submitted bugs, code, and offered their advice freely. Their support is greatly appreciated.
- * 
+ *
  * Version: 1.3.4 (11/11/2010)
  * Requires: jQuery v1.3+
  *
@@ -427,7 +427,7 @@ easingOut:"swing",showCloseButton:true,showNavArrows:true,enableEscapeButton:tru
 
 // Chosen, a Select Box Enhancer for jQuery and Protoype
 // by Patrick Filler for Harvest, http://getharvest.com
-// 
+//
 // Version 0.9.7
 // Full source at https://github.com/harvesthq/chosen
 // Copyright (c)2011 Harvest http://getharvest.com
@@ -448,7 +448,7 @@ easingOut:"swing",showCloseButton:true,showNavArrows:true,enableEscapeButton:tru
  * browser tooltip. It is extremely lightweight and very smart in
  * that it detects the edges of the browser window and will make sure
  * the tooltip stays within the current window size. As a result the
- * tooltip will adjust itself to be displayed above, below, to the left 
+ * tooltip will adjust itself to be displayed above, below, to the left
  * or to the right depending on what is necessary to stay within the
  * browser window. It is completely customizable as well via CSS.
  *
@@ -485,7 +485,7 @@ p_st = '';
 
 // ON LOAD
 $(document).ready(function(){
-	
+
 	// Reemplazo de emoticonos, etc.
 	$(".rich").each(function (i){ $(this).html(enriquecer($(this).html(), true)); });
 
@@ -497,14 +497,14 @@ $(document).ready(function(){
 		if (voto == 1){ var c_mas = " checked=\"checked\""; }
 		if (voto == -1){ var c_menos = " checked=\"checked\""; }
 		var radio_ID = tipo + item_ID;
-		$(this).html("+<input type=\"radio\" class=\"radio_" + radio_ID + "\" name=\"radio_" + radio_ID + "\" onclick=\"votar(1, '" + tipo + "', '" + item_ID + "');\"" + c_mas + " /><input type=\"radio\" class=\"radio_" + radio_ID + "\" name=\"radio_" + radio_ID + "\" onclick=\"votar(-1, '" + tipo + "', '" + item_ID + "');\"" + c_menos + " />&#8211;"); 
+		$(this).html("+<input type=\"radio\" class=\"radio_" + radio_ID + "\" name=\"radio_" + radio_ID + "\" onclick=\"votar(1, '" + tipo + "', '" + item_ID + "');\"" + c_mas + " /><input type=\"radio\" class=\"radio_" + radio_ID + "\" name=\"radio_" + radio_ID + "\" onclick=\"votar(-1, '" + tipo + "', '" + item_ID + "');\"" + c_menos + " />&#8211;");
 	});
 
 	search_timers();
 	setInterval("search_timers()", 60000); // Actualiza temporizadores, cada 1 minuto.
 
 	// Efecto scroll horizontal de Notificaciones.
-	if (p_scroll == true){ 
+	if (p_scroll == true){
 		p_r = false;
 		pl = 0;
 		if (Math.floor(Math.random()*2)== 1){ p_r = true; } // Deslizado izquierda/derecha aleatorio.
@@ -525,7 +525,7 @@ $(document).ready(function(){
 		function (){
 			var txt = $(this).attr("value");
 			$(this).append('<span class="ayudap">' + txt + '</span>');
-		}, 
+		},
 		function (){ $(".ayudap").remove(); }
 	);
 
@@ -546,7 +546,7 @@ function pscr(){
 }
 function pscr_close(){ p_scroll = false; }
 
-function actualizar_noti(){ 
+function actualizar_noti(){
 	$('#notif').load('/ajax.php?a=noti');
 	if (p_scroll == false){ clearInterval(p_st); }
 	search_timers();
@@ -575,7 +575,7 @@ function votar(voto, tipo, item_ID){
 function print_votonum(num){
 	var num = parseInt(num);
 	if (num >= 10){ return "<span class=\"vcc\">+" + num + "</span>"; }
-	else if (num >= 0){ return "<span class=\"vc\">+" + num + "</span>"; } 
+	else if (num >= 0){ return "<span class=\"vc\">+" + num + "</span>"; }
 	else if (num > -10){ return "<span class=\"vcn\">" + num + "</span>"; }
 	else { return "<span class=\"vcnn\">" + num + "</span>"; }
 }
@@ -588,7 +588,7 @@ function print_whois(whois, wnick){
 	if (w[6] == 1){ var wa = "<img src=\"" + IMG + "a/" + w[0] + ".jpg\" style=\"float:right;margin:0 -6px 0 0;\" />"; } else { var wa = ""; }
 	if (w[11] != 0){ var wc = "<img src=\"" + IMG + "cargos/" + w[11] + ".gif\" width=\"16\" /> "; } else { var wc = ""; }
 	if (w[9] == "expulsado"){ var exp = "<br /><b style=\"color:red;\">" + w[12] + "</b>"; } else { var exp = ""; }
-		
+
 		$("#pnick").html("<legend>" + wc + "<b style=\"color:grey;\"><span style=\"color:#555;\">" + wnick + "</span> (<span class=\"" + w[9] + "\">" + w[9].substr(0,1).toUpperCase()+ w[9].substr(1,w[9].length)+ "</span> de " + w[10] + ")</b>" + exp + "</legend>" + wa + "Confianza: " + print_votonum(w[13])+ "<br /><!--Afil: <b>" + w[7] + "</b><br />-->Foro: <b>" + w[8] + "</b><br /><br />Online: <b>" + w[5] + "</b><br />Ultimo acceso: <b>" + w[2] + "</b><br />Registrado: <b>" + w[1] + "</b>").css("display","inline");
 	}
 }
@@ -606,9 +606,9 @@ function hace(cuando, ts, num, pre){
 	tiempo = (cuando - ts);
 	if (pre){ if (tiempo >= 0){ pre = _["En"]; } else { pre = _["Hace"]; } }
 	tiempo = Math.abs(tiempo);
-	
+
 	var periods_sec = new Array(2419200, 86400, 3600, 60, 1);
-	var periods_txt = new Array(_["meses"], _["días"], _["horas"], _["min"], _["seg"]);
+	var periods_txt = new Array(_["meses"], "dias", _["horas"], _["min"], _["seg"]);
 
 	if (pre){ var duracion = pre + " "; } else { var duracion = ""; }
 
@@ -618,7 +618,7 @@ function hace(cuando, ts, num, pre){
 		sec = periods_sec[n];
 		if ((nm < num)&& ((tiempo_cont >= (sec*2))|| (n == 4))){
 			period = Math.floor(tiempo_cont / sec);
-			if (n == 4){ 
+			if (n == 4){
 				duracion += _["Segundos"];
 			} else {
 				duracion += period + " " + periods_txt[n];
@@ -665,7 +665,7 @@ function toggle_ignorados(nick){
 		$("."+nick).show();
 		scroll_abajo();
 	} else {
-		array_ignorados.push(nick); 
+		array_ignorados.push(nick);
 		$("."+nick).hide();
 	}
 	merge_list();
@@ -677,7 +677,7 @@ function cf_cambiarnick(){
 	nick_anonimo = $("#cf_nick").val();
 	nick_anonimo = nick_anonimo.replace(/[^A-Za-z0-9_-]/g, "");
 	if ((nick_anonimo)&& (nick_anonimo.length >= 3)&& (nick_anonimo.length <= 14)){
-		elnick = "-" + nick_anonimo.replace(" ", "_"); 
+		elnick = "-" + nick_anonimo.replace(" ", "_");
 		anonimo = elnick;
 		$("#cf").hide();
 		$("#chatform").show();
@@ -690,7 +690,7 @@ function chat_filtro_change(){
 		$(".cf_c, .cf_e").hide();
 	} else {
 		chat_filtro = "normal";
-		$(".cf_c, .cf_e").show();	
+		$(".cf_c, .cf_e").show();
 	}
 	chat_scroll = 0;
 	scroll_abajo();
@@ -771,7 +771,7 @@ function print_msg(data){
 			var m_nick = mli[3];
 
 			if (!chat_msg_ID[m_ID]){
-				
+
 				chat_msg_ID[m_ID] = true;
 
 				if (chat_time == m_time){ m_time = "<span style=\"color:#eee;\">" + m_time + "</span>"; } else { chat_time = m_time; }
@@ -798,11 +798,11 @@ function print_msg(data){
 						break;
 
 					default:
-						if (minick != ""){ 
+						if (minick != ""){
 							var txt = " " + txt;
 							var regexp = eval("/ "+minick+"/gi");
-							var txt = txt.replace(regexp, " <b style=\"color:orange;\">" + minick + "</b>"); 
-							if (txt.search(regexp)!= -1){ chat_sin_leer_yo = chat_sin_leer_yo + "+"; } 
+							var txt = txt.replace(regexp, " <b style=\"color:orange;\">" + minick + "</b>");
+							if (txt.search(regexp)!= -1){ chat_sin_leer_yo = chat_sin_leer_yo + "+"; }
 						}
 
 						var vpc_yo = "";
@@ -812,7 +812,7 @@ function print_msg(data){
 				}
 
 				if (((msg_num - 1)== i)&& (msg_num != "n")&& (m_nick != "&nbsp;")){ msg_ID = m_ID; }
-				if ((m_tipo != "c")&& (m_nick != "_")&& (m_nick != "")){ 
+				if ((m_tipo != "c")&& (m_nick != "_")&& (m_nick != "")){
 					al[m_nick] = parseInt(new Date().getTime().toString().substring(0, 10));
 					if ((al_cargo[m_nick] == "0")|| (!al_cargo[m_nick])){ al_cargo[m_nick] = m_tipo; }
 				}
@@ -835,7 +835,7 @@ function print_msg(data){
 function merge_list(){
 	var unix_timestamp = parseInt(new Date().getTime().toString().substring(0, 10));
 	var times_exp = parseInt(unix_timestamp - 1500); //25min
-	
+
 	array_list = new Array();
 	for (elnick in al){
 		if (al[elnick] < times_exp){
@@ -844,12 +844,12 @@ function merge_list(){
 		} else {
 			var cargo_ID = al_cargo[elnick];
 
-			if (cargo_ID.substr(0,3)== "98_"){ var kick_nick  = "ip-" + cargo_ID.substr(3); } 
+			if (cargo_ID.substr(0,3)== "98_"){ var kick_nick  = "ip-" + cargo_ID.substr(3); }
 			else { var kick_nick  = elnick; }
 
 			var idx = $.inArray(elnick, array_ignorados);
 			if (idx != -1){ nick_tachado = "<strike>" + elnick + "</strike>"; } else { nick_tachado = elnick; }
-			
+
 			if (array_list[cargo_ID] === undefined){ array_list[cargo_ID] = ""; }
 
 			if (hace_kick){
@@ -893,8 +893,8 @@ function enviarmsg(){
 		clearTimeout(refresh);
 		$("#botonenviar").attr("disabled","disabled");
 		$("#vpc_msg").attr("value","").css("background", "none").css("color", "black");
-		$.post("/ajax.php", { a: "enviar", chat_ID: chat_ID, n: msg_ID, msg: elmsg, anonimo: anonimo }, 
-		function(data){ 
+		$.post("/ajax.php", { a: "enviar", chat_ID: chat_ID, n: msg_ID, msg: elmsg, anonimo: anonimo },
+		function(data){
 			ajax_refresh = true;
 			if (data){ chat_sin_leer = -1; print_msg(data); }
 			setTimeout(function(){ $("#botonenviar").removeAttr("disabled"); }, 1600);
@@ -959,7 +959,7 @@ function enriquecer(m, bbcode){
 
 	// BBCODE
 	if (bbcode){
-		m = m.replace(/\[(b|i|em|s)\](.*?)\[\/\1\]/gi, '<$1>$2</$1>'); 
+		m = m.replace(/\[(b|i|em|s)\](.*?)\[\/\1\]/gi, '<$1>$2</$1>');
 		m = m.replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" alt="img" style="max-width:800px;" />');
 		m = m.replace(/\[youtube\]http\:\/\/www\.youtube\.com\/watch\?v=(.*?)\[\/youtube\]/gi, '<iframe width="520" height="390" src="http://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
 		m = m.replace(/\[quote\]/gi, '<blockquote><div class="quote">');

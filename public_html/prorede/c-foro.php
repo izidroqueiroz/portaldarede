@@ -71,10 +71,10 @@ FROM cargos_users
 WHERE cargo = 'true' AND pais = '".PAIS."' AND user_ID = '".$pol['user_ID']."'
 ORDER BY nivel DESC", $link);
 			while($r = mysql_fetch_array($result)){
-				$select_cargos .= '<option value="'.$r['cargo_ID'].'"'.($edit_cargo==$r['cargo_ID']?' selected="selected"':'').'>'.$r['nombre'].'</option>'."\n";
+				$select_cargos .= '<option value="'.$r['cargo_ID'].'"'.($edit_cargo==$r['cargo_ID']?' selected="selected"':'').'>'._($r['nombre']).'</option>'."\n";
 			}
 		}
-		if ($pol['estado'] == 'extranjero') { $select_cargos = '<option value="99">Extranjero</option>'; } else { $select_cargos = '<option value="0">Ciudadano</option>' . $select_cargos; }
+		if ($pol['estado'] == 'extranjero') { $select_cargos = '<option value="99">Extranjero</option>'; } else { $select_cargos = '<option value="0">'._('Ciudadano').'</option>' . $select_cargos; }
 
 		if (!$hilo) {
 			if ($edit) { $get = 'editar'; } else { $get = 'hilo'; }
@@ -84,14 +84,14 @@ ORDER BY nivel DESC", $link);
 <hr />
 
 
-<fieldset><legend>Nuevo hilo</legend>
+<fieldset><legend>'._('Nuevo hilo').'</legend>
 
 <form action="'.accion_url().'a=foro&b=' . $get . '" method="post">
 <input type="hidden" name="subforo" value="' . $subforo . '"  />
 <input type="hidden" name="return_url" value="' . $return_url . '"  />';
 
 			if ($edit) {
-				$html .= '<p>Foro: <select name="sub_ID">';
+				$html .= '<p>'._('Foro').': <select name="sub_ID">';
 				$result = mysql_query("SELECT ID, url, title, acceso_escribir, acceso_cfg_escribir FROM ".SQL."foros WHERE estado = 'ok' ORDER BY time ASC", $link);
 				while($r = mysql_fetch_array($result)){
 					$html .= '<option value="'.$r['ID'].'"'.($r['ID']==$sub_ID?' selected="selected"':'').(nucleo_acceso($r['acceso_escribir'],$r['acceso_cfg_escribir'])?'':' disabled="disabled"').'>'.$r['title'].'</option>';
@@ -102,18 +102,18 @@ ORDER BY nivel DESC", $link);
 <p>Título:<br />
 <input name="title" size="60" maxlength="80" type="text" value="'.str_replace('"', '&#34;', $edit_title).'" required /></p>
 
-<p'.($edit&&$edit_user_ID!=$pol['user_ID']?' style="display:none;"':'').'>Mensaje:<br />
+<p'.($edit&&$edit_user_ID!=$pol['user_ID']?' style="display:none;"':'').'>'._('Mensaje').':<br />
 <textarea name="text" style="width:600px;height:260px;" required>'.$edit_text.'</textarea><br />
 <span style="color:grey;font-size:12px;">Etiquetas: [b]...[/b] [em]...[/em] [quote]...[/quote] [img]url[/img] [youtube]url-youtube[/youtube], auto-enlaces.</span></p>
 
-<p>'.boton('Enviar', 'submit', false, 'large blue').' En calidad de: <select name="encalidad">' . $select_cargos . '
+<p>'.boton('Enviar', 'submit', false, 'large blue').' '._('En calidad de').': <select name="encalidad">' . $select_cargos . '
 </select></p>
 </form>
 
 </fieldset>
 
 
-'.($edit?'<hr /><p style="text-align:right;">'.boton('Eliminar hilo', accion_url().'a=foro&b=eliminarhilo&ID='.$edit_ID, '¿Estás seguro de querer ELIMINAR este HILO DE FORMA IRREVOCABLE?').'</p>':'').'
+'.($edit?'<hr /><p style="text-align:right;">'.boton('Eliminar hilo', accion_url().'a=foro&b=eliminarhilo&ID='.$edit_ID, _('¿Estás seguro de querer ELIMINAR este HILO DE FORMA IRREVOCABLE?')).'</p>':'').'
 
 </div>';
 		} else {
@@ -126,12 +126,12 @@ ORDER BY nivel DESC", $link);
 
 <hr />
 
-<fieldset><legend>Mensaje en este hilo</legend>
+<fieldset><legend>'._('Mensaje en este hilo').'</legend>
 <p>
 <textarea name="text" style="width:570px;height:250px;" required>'.$edit_text.'</textarea><br />
 <span style="color:grey;font-size:12px;">Etiquetas: [b]...[/b] [em]...[/em] [quote]...[/quote] [img]url[/img] [youtube]url-youtube[/youtube], auto-enlaces.</span></p>
 
-<p>'.boton('Enviar', 'submit', false, 'blue large').' En calidad de: <select name="encalidad">' . $select_cargos . '
+<p>'.boton('Enviar', 'submit', false, 'blue large').' '._('En calidad de').': <select name="encalidad">' . $select_cargos . '
 </select></p>
 </fieldset>
 
@@ -173,7 +173,7 @@ $txt .= mysql_error($link);
 
 
 } elseif ($_GET['a'] == 'editar') {
-	$txt_nav = array('/foro'=>'Foro', 'Editar');
+	$txt_nav = array('/foro'=>_('Foro'), 'Editar');
 	$txt .= foro_enviar($_GET['b'], $_GET['c'], true);
 
 } elseif ($_GET['a'] == 'mis-respuestas') {
@@ -191,10 +191,10 @@ $txt .= mysql_error($link);
 	if (!isset($el_user_ID)) { exit; }
 
 	$txt_title = 'Foro - Actividad';
-	$txt_nav = array('/foro'=>'Foro', 'Tu actividad');
-	$txt_tab = array('/foro/'=>'Foro', '/foro/ultima-actividad/'=>'Última actividad', '/control/gobierno/foro/'=>'Configuración foro', );
+	$txt_nav = array('/foro'=>_('Foro'), _('Tu actividad'));
+	$txt_tab = array('/foro/'=>_('Foro'), '/foro/ultima-actividad/'=>_('Última actividad'), '/control/gobierno/foro/'=>_('Configuración foro'), );
 
-	$txt .= '<fieldset><legend>Últimos hilos</legend>
+	$txt .= '<fieldset><legend>'._('Últimos hilos').'</legend>
 
 <table border="0" cellpadding="1" cellspacing="0">';
 
@@ -215,7 +215,7 @@ LIMIT 10", $link);
 	$txt .= '</table></fieldset>
 
 
-<fieldset><legend>Últimos mensajes</legend>
+<fieldset><legend>'._('Últimos mensajes').'</legend>
 
 <table border="0" cellpadding="1" cellspacing="0">';
 
@@ -241,7 +241,7 @@ LIMIT 50", $link);
 
 		if (!$repes[$r['hilo_ID']]) {
 			$repes[$r['hilo_ID']] = true;
-			$txt .= '<tr><td align="right" valign="top" colspan="2">' . print_lateral($r['nick'], $r['cargo'], $r['time'], '', $pol['user_ID'], '', $r['votos'], $r['votos_num'], false, 'msg', $r['ID']) . '</td><td align="right" valign="top"><acronym title="Nuevos mensajes"><b style="font-size:20px;">'.$resp_num.'</b></acronym></td><td valign="top" colspan="2" nowrap="nowrap" style="color:grey;"><a href="/foro/'.$sub[$r['sub_ID']].'/'.$r['hilo_url'].'"><b>'.$r['hilo_titulo'].'</b></a><br /><span title="Mensajes después del tuyo">(<b style="font-size:18px;">'.$resp_num.'</b> nuevos)</span> '.substr(strip_tags($r['text']), 0, 90).'..</td></tr>';
+			$txt .= '<tr><td align="right" valign="top" colspan="2">' . print_lateral($r['nick'], $r['cargo'], $r['time'], '', $pol['user_ID'], '', $r['votos'], $r['votos_num'], false, 'msg', $r['ID']) . '</td><td align="right" valign="top"><acronym title="Nuevos mensajes"><b style="font-size:20px;">'.$resp_num.'</b></acronym></td><td valign="top" colspan="2" nowrap="nowrap" style="color:grey;"><a href="/foro/'.$sub[$r['sub_ID']].'/'.$r['hilo_url'].'"><b>'.$r['hilo_titulo'].'</b></a><br /><span title="Mensajes después del tuyo">(<b style="font-size:18px;">'.$resp_num.'</b> '._('nuevos').')</span> '.substr(strip_tags($r['text']), 0, 90).'..</td></tr>';
 		}
 	}
 
@@ -252,10 +252,10 @@ LIMIT 50", $link);
 
 
 	$txt_title = 'Foro: Última actividad';
-	$txt_nav = array('/foro'=>'Foro', 'Última actividad');
-	$txt_tab = array('/foro'=>'Foro', '/foro/ultima-actividad'=>'Última actividad', '/control/gobierno/foro'=>'Configuración foro');
+	$txt_nav = array('/foro'=>_('Foro'), _('Última actividad'));
+	$txt_tab = array('/foro'=>_('Foro'), '/foro/ultima-actividad'=>_('Última actividad'), '/control/gobierno/foro'=>_('Configuración foro'));
 
-	$txt .= '<fieldset><legend>Últimos 50 mensajes</legend>
+	$txt .= '<fieldset><legend>'._('Últimos 50 mensajes').'</legend>
 
 <table border="0" cellpadding="1" cellspacing="0">';
 
@@ -324,7 +324,7 @@ LIMIT 1", $link);
 			if ($_GET['c']) { $pag_title = ' - Página: '.$_GET['c']; }
 
 			$txt_title = $r['title'].' - Foro: '.$r['foro_title'].$pag_title;
-			$txt_nav = array('/foro'=>'Foro', '/foro/'.$r['foro_url']=>$r['foro_title'], $r['title']);
+			$txt_nav = array('/foro'=>_('Foro'), '/foro/'.$r['foro_url']=>$r['foro_title'], $r['title']);
 
 			$txt_description = $r['title'].' - Foro: '.$r['foro_title'].$pag_title;
 
@@ -352,8 +352,8 @@ LIMIT 1", $link);
 <tr>
 <td colspan="2" valign="middle" class="gris">
 '.$p_paginas.' &nbsp; ' . boton('Responder', $crear_hilo, false, 'large blue') . ' &nbsp;
-<span style="float:right;margin-top:20px;">Orden: <a href="/'.$return_url.'/"'.($_GET['c']=='mejores'?'':' style="color:#444;"').'>Fecha</a> | <a href="/'.$return_url.'mejores/"'.($_GET['c']=='mejores'?' style="color:#444;"':'').'>Votos</a></span>
-<b>'.$r['num'].'</b> mensajes en este hilo creado hace <acronym title="'.$r['time'].'"><span class="timer" value="'.strtotime($r['time']).'"></span></acronym>.
+<span style="float:right;margin-top:20px;">'._('Orden').': <a href="/'.$return_url.'/"'.($_GET['c']=='mejores'?'':' style="color:#444;"').'>'._('Fecha').'</a> | <a href="/'.$return_url.'mejores/"'.($_GET['c']=='mejores'?' style="color:#444;"':'').'>Votos</a></span>
+<b>'.$r['num'].'</b> '._('mensajes en este hilo creado hace').' <acronym title="'.$r['time'].'"><span class="timer" value="'.strtotime($r['time']).'"></span></acronym>.
 </td>
 </td>';
 
@@ -366,7 +366,7 @@ ORDER BY ".($_GET['c']=='mejores'?'votos DESC LIMIT 100':'time ASC LIMIT '.mysql
 			while($r2 = mysql_fetch_array($result2)) {
 
 				if (($pol['user_ID'] == $r2['user_ID']) AND ($subforo != 'notaria') AND (strtotime($r2['time']) > (time() - 3600))) {
-					$editar = boton('Editar', '/foro/editar/'.$r2['hilo_ID'].'/'.$r2['ID'], false, 'small').boton('X', accion_url().'a=foro&b=eliminarreply&ID='.$r2['ID'].'&hilo_ID='.$r2['hilo_ID'], '¿Estás seguro de querer ELIMINAR tu MENSAJE?', 'small red').' ';
+					$editar = boton('Editar', '/foro/editar/'.$r2['hilo_ID'].'/'.$r2['ID'], false, 'small').boton('X', accion_url().'a=foro&b=eliminarreply&ID='.$r2['ID'].'&hilo_ID='.$r2['hilo_ID'], _('¿Estás seguro de querer ELIMINAR tu MENSAJE?'), 'small red').' ';
 				} elseif (nucleo_acceso($vp['acceso']['foro_borrar'])) {
 					// policia borra
 					$editar = boton(_('Papelera'), accion_url().'a=foro&b=borrar&c=mensaje&ID=' . $r2['ID'] . '/', '¿Quieres enviar a la PAPELERA este MENSAJE?', 'small') . ' ';
@@ -384,7 +384,7 @@ ORDER BY ".($_GET['c']=='mejores'?'votos DESC LIMIT 100':'time ASC LIMIT '.mysql
 
 			if (!$pol['user_ID']) { $txt .= '<p class="azul"><b>Para poder participar en esta conversacion has de <a href="'.REGISTRAR.'?p='.PAIS.'">registrar tu ciudadano</a></b></p>'; }
 
-			$txt .= '<fieldset><legend>Más hilos</legend><p>';
+			$txt .= '<fieldset><legend>'._('Más hilos').'</legend><p>';
 			$result2 = mysql_query("SELECT url, title, (SELECT url FROM ".SQL."foros WHERE ID = ".SQL."foros_hilos.sub_ID LIMIT 1) AS subforo FROM ".SQL."foros_hilos WHERE estado = 'ok' ORDER BY RAND() LIMIT 10", $link);
 			while($r2 = mysql_fetch_array($result2)) {
 				$txt .= '<a href="/foro/'.$r2['subforo'].'/'.$r2['url'].'/">'.$r2['title'].'</a>, ';
@@ -398,9 +398,9 @@ ORDER BY ".($_GET['c']=='mejores'?'votos DESC LIMIT 100':'time ASC LIMIT '.mysql
 
 	$txt_title = _('Papelera');
 	$txt_nav = array('/foro'=>_('Foro'), '/foro/papelera'=>_('Papelera'));
-	$txt_tab = array('/foro'=>_('Foro'), '/foro/ultima-actividad'=>'Última actividad', '/control/gobierno/foro'=>'Configuración foro');
+	$txt_tab = array('/foro'=>_('Foro'), '/foro/ultima-actividad'=>_('Última actividad'), '/control/gobierno/foro'=>_('Configuración foro'));
 
-	$txt .= '<fieldset><legend>Hilos borrados</legend>
+	$txt .= '<fieldset><legend>'._('Hilos borrados').'</legend>
 
 <table border="0" cellpadding="1" cellspacing="0">';
 
@@ -421,7 +421,7 @@ ORDER BY time_last DESC", $link);
 $txt .= '</table></fieldset>
 
 
-<fieldset><legend>Mensajes borrados</legend>
+<fieldset><legend>'._('Mensajes borrados').'</legend>
 
 <table>';
 
@@ -442,7 +442,7 @@ ORDER BY time2 DESC", $link);
 	}
 
 
-	$txt .= '</table></fieldset><p class="gris">Los mensajes se eliminarán tras 10 días.</p>';
+	$txt .= '</table></fieldset><p class="gris">'._('Los mensajes se eliminarán tras 10 días.').'</p>';
 
 	$txt_header = '<style type="text/css">.content-in hr { border: 1px solid grey; } .flateral { margin:0 0 0 5px; float:right; } .pforo { text-align:justify; font-size:11px; margin:2px; }</style>';
 
@@ -456,8 +456,8 @@ ORDER BY time2 DESC", $link);
 			$return_url = 'foro/'.$r['url'].'/';
 
 			$txt_title = 'Foro: '.$r['title'].' - '.$r['descripcion'];
-			$txt_nav = array('/foro'=>'Foro', $r['title']);
-			$txt_tab = array('/foro/'=>'Foro', '/foro/ultima-actividad/'=>'Última actividad', '/control/gobierno/foro/'=>'Configuración foro', );
+			$txt_nav = array('/foro'=>_('Foro'), $r['title']);
+			$txt_tab = array('/foro/'=>_('Foro'), '/foro/ultima-actividad/'=>_('Última actividad'), '/control/gobierno/foro/'=>_('Configuración foro'), );
 
 			if (nucleo_acceso($r['acceso_escribir'], $r['acceso_cfg_escribir'])) { $txt_tab = array('#enviar'=>_('Crear hilo')); }
 
@@ -468,9 +468,9 @@ ORDER BY time2 DESC", $link);
 <table border="0" cellpadding="1" cellspacing="0">
 <tr>
 <th>Autor</th>
-<th colspan="2">Mensajes</th>
-<th>Hilo</th>
-<th>Creado</th>
+<th colspan="2">'._('Mensajes').'</th>
+<th>'._('Hilo').'</th>
+<th>'._('Creado hace').'</th>
 <th></th>
 </tr>';
 			$result2 = mysql_query("SELECT ID, url, user_ID, title, time, time_last, cargo, num, sub_ID, votos, votos_num,
@@ -488,10 +488,10 @@ LIMIT 200", $link);
 					} else {
 						$titulo = '<a href="/foro/' . $r['url'] . '/' . $r2['url'] . '"><b>' . $r2['title'] . '</b></a>';
 					}
-					if (strtotime($r2['time']) > (time() - 86400)) { $titulo = $titulo . ' <sup style="font-size:9px;color:red;">¡Nuevo!</sup>'; }
+					if (strtotime($r2['time']) > (time() - 86400)) { $titulo = $titulo . ' <sup style="font-size:9px;color:red;">'._('¡Nuevo!').'</sup>'; }
 
 					if (($pol['user_ID'] == $r2['user_ID']) AND (nucleo_acceso($r['acceso_escribir'], $r['acceso_cfg_escribir']))) {
-						$editar = ' '.boton('X', accion_url().'a=foro&b=eliminarhilo&ID='.$r2['ID'], '¿Estás seguro de querer ELIMINAR este HILO?', 'small red');
+						$editar = ' '.boton('X', accion_url().'a=foro&b=eliminarhilo&ID='.$r2['ID'], _('¿Estás seguro de querer ELIMINAR este HILO?'), 'small red');
 					} else { $editar = ''; }
 
 					$txt .= '<tr>
@@ -549,7 +549,7 @@ LIMIT ".mysql_real_escape_string($r['limite']), $link);
 	<td align="right"><b>'.$r2['num'].'</b></td>
 	<td align="right" style="padding-right:4px;">'.confianza($r2['votos'], $r2['votos_num']).'</td>
 
-	<td><a'.($time_hilo>(time()-432000)?' style="font-weight:bold;"':'').' href="/foro/'.$r['url'].'/'.$r2['url'].'" class="rich">'.$r2['title'].'</a>'.($time_hilo>(time()-86400)?' <sup style="font-size:9px;color:red;">¡Nuevo!</sup>':'').'</td>
+	<td><a'.($time_hilo>(time()-432000)?' style="font-weight:bold;"':'').' href="/foro/'.$r['url'].'/'.$r2['url'].'" class="rich">'.$r2['title'].'</a>'.($time_hilo>(time()-86400)?' <sup style="font-size:9px;color:red;">'._('¡Nuevo!').'</sup>':'').'</td>
 
 	<td align="right" nowrap="nowrap"><span class="timer" value="'.$time_hilo.'"></span></td>
 	</tr>';
@@ -571,9 +571,9 @@ LIMIT ".mysql_real_escape_string($r['limite']), $link);
 '.$txt_table.'
 
 <tr class="amarillo">
-<td width="120"><h2><a href="/foro/papelera/" style="font-size:22px;margin-left:8px;">Papelera</a></h2></td>
+<td width="120"><h2><a href="/foro/papelera/" style="font-size:22px;margin-left:8px;">'._('Papelera').'</a></h2></td>
 <td align="right"><b style="font-size:19px;"></b></td>
-<td style="color:green;" colspan="2">Cuarentena de mensajes, eliminados tras 10 días.</td>
+<td style="color:green;" colspan="2">'._('Cuarentena de mensajes, eliminados tras 10 días.').'</td>
 <td align="right" width="10%"></td>
 </tr>
 </table>';

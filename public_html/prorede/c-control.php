@@ -813,14 +813,14 @@ ORDER BY time ASC");
 
 		$txt_li['leer'] = ''; $txt_li['escribir'] = ''; $txt_li['escribir_msg'] = '';
 		foreach (nucleo_acceso('print') AS $at => $at_var) {
-			$txt_li['leer'] .= '<option value="'.$at.'"'.($at==$r['acceso_leer']?' selected="selected"':'').'>'.ucfirst(str_replace("_", " ", $at)).'</option>';
+			$txt_li['leer'] .= '<option value="'.$at.'"'.($at==$r['acceso_leer']?' selected="selected"':'').'>'._(ucfirst(str_replace("_", " ", $at))).'</option>';
 		}
 		foreach (nucleo_acceso('print') AS $at => $at_var) {
-			$txt_li['escribir'] .= '<option value="'.$at.'"'.($at==$r['acceso_escribir']?' selected="selected"':'').($at=='anonimos'?' disabled="disabled"':'').'>'.ucfirst(str_replace("_", " ", $at)).'</option>';
+			$txt_li['escribir'] .= '<option value="'.$at.'"'.($at==$r['acceso_escribir']?' selected="selected"':'').($at=='anonimos'?' disabled="disabled"':'').'>'._(ucfirst(str_replace("_", " ", $at))).'</option>';
 		}
 
 		foreach (nucleo_acceso('print') AS $at => $at_var) {
-			$txt_li['escribir_msg'] .= '<option value="'.$at.'"'.($at==$r['acceso_escribir_msg']?' selected="selected"':'').($at=='anonimos'?' disabled="disabled"':'').'>'.ucfirst(str_replace("_", " ", $at)).'</option>';
+			$txt_li['escribir_msg'] .= '<option value="'.$at.'"'.($at==$r['acceso_escribir_msg']?' selected="selected"':'').($at=='anonimos'?' disabled="disabled"':'').'>'._(ucfirst(str_replace("_", " ", $at))).'</option>';
 		}
 
 
