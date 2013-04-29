@@ -181,6 +181,8 @@ case 'perfil':
 		sql("UPDATE users SET datos = '".implode('][', $datos_array)."' WHERE ID = '".$pol['user_ID']."' LIMIT 1");
 	} elseif ($_GET['b'] == 'nombre') {
 		sql("UPDATE users SET nombre = '".strip_tags($_POST['nombre'])."' WHERE ID = '".$pol['user_ID']."' LIMIT 1");
+	} elseif ($_GET['b'] == 'endereco') {
+		sql("UPDATE users SET CEP = '".strip_tags($_POST['CEP'])."' WHERE ID = '".$pol['user_ID']."' LIMIT 1");
 	}
 	$refer_url = 'perfil/editar';
 	break;
