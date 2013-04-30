@@ -83,7 +83,7 @@ if ($user_ID == $pol['user_ID']) { //es USER
 
 <fieldset><legend>'._('Tu nombre').'</legend>
 <form action="'.accion_url().'a=perfil&b=nombre" method="post">
-<p>Introduce tu nombre y apellidos. No es obligatorio, pero debe ser veráz. Será visible para los ciudadanos de '.PAIS.'.<br />
+<p>'._('Introduce tu nombre y apellidos. No es obligatorio, pero debe ser veráz. Será visible para los ciudadanos de ').PAIS.'.<br />
 <input type="text" name="nombre" value="" size="40" maxlength="90" placeholder="'.$r['nombre'].'" required  />
  '.boton(_('Guardar'), 'submit', false, 'blue').'
 </form></p>
@@ -307,7 +307,7 @@ $txt .= '
 <tr>
 <td align="center"><h1>'.$nick.''.($r['dnie']=='true'?' <span class="icon medium" style="color:#339900;" data-icon="l" title="Autentificado"></span>':'').(isset($r['nombre'])&&nucleo_acceso('ciudadanos')?' <span style="color:#BBB;font-size:18px;">'.$r['nombre'].'</span>':'').'</h1>
 
-<span style="color:grey;font-size:22px;"><b><span'.($r['estado']!='ciudadano'?' class="'.$r['estado'].'"':'').'>'.($r['estado']=='expulsado'&&$razon==false?_('Auto-eliminado'):ucfirst($r['estado'])).'</span> '.($r['estado']!='expulsado'?''._('de').' '.$pol['config']['pais_des']:'').'</b></span>
+<span style="color:grey;font-size:22px;"><b><span'.($r['estado']!='ciudadano'?' class="'.$r['estado'].'"':'').'>'.($r['estado']=='expulsado'&&$razon==false?_('Auto-eliminado'):_(ucfirst($r['estado']))).'</span> '.($r['estado']!='expulsado'?''._('de').' '.$pol['config']['pais_des']:'').'</b></span>
 </td>
 </tr>
 

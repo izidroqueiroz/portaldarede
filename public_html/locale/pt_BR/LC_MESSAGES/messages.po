@@ -177,14 +177,15 @@ msgstr "Correto!"
 
 #: D:\www\VirtualPol\public_html\./registrar/index.php:157
 msgid "Tu usuario ha sido creado exitosamente"
-msgstr "Seu usuário foi criado com êxito."
+msgstr "Seu usuário foi criado com êxito"
 
 #: D:\www\VirtualPol\public_html\./registrar/index.php:157
-msgid ""
-"Último paso. Ahora <b>debes revisar tu email</b>, te hemos enviado un email "
-"para validar tu usuario.</p><p>Esta medida es por seguridad. Por favor, "
-"rescata el email si lo encuentras en la carpeta de spam"
-msgstr "Último passo. Agora <b>você deve verificar seu email</b>. Enviamos um email para validar seu usuário, por medida de segurança</p><p> Por favor, verifique também se o email está na pasta de spam"
+msgid "Último paso. Ahora <b>debes revisar tu email</b>, te hemos enviado un email para validar tu usuario"
+msgstr "Último passo: agora <b>você deve verificar seu email</b>. Enviamos um email para validar seu usuário, por medida de segurança"
+
+#: D:\www\VirtualPol\public_html\./registrar/index.php:157
+msgid "Por favor, rescata el email si lo encuentras en la carpeta de spam. Esta medida es por seguridad"
+msgstr "<p> Por favor, verifique também se o email está na pasta de spam.</p>"
 
 #: D:\www\VirtualPol\public_html\./registrar/index.php:159
 #: D:\www\VirtualPol\public_html\./registrar/index.php:160
@@ -445,7 +446,7 @@ msgstr "ELIMINAR utilizador permanentemente"
 msgid ""
 "Cambio efectuado correctamente.</b> Debes entrar de nuevo con tu usuario y "
 "contraseña"
-msgstr "Modificação efetuada corretamente.</b> Deves entrar de novo com o teu utilizador y password"
+msgstr "Modificação efetuada corretamente.</b> Você deve entrar novamente com seu apelido e senha"
 
 #: D:\www\VirtualPol\public_html\./registrar/login.php:143
 msgid "Panel de Usuario"
@@ -2312,7 +2313,7 @@ msgstr "Os cidadãos mais próximos de ti"
 #: D:\www\VirtualPol\public_html\./source/c-geolocalizacion.php:30
 #: D:\www\VirtualPol\public_html\./source/c-geolocalizacion.php:130
 msgid "No estás geolocalizado"
-msgstr "Não estás geolocalizado"
+msgstr "Você não está geolocalizado"
 
 #: D:\www\VirtualPol\public_html\./source/c-hacer.php
 msgid "Estás geolocalizado correctamente"
