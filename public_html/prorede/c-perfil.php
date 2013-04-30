@@ -12,11 +12,11 @@ include('inc-login.php');
 if (($_GET['a'] == 'editar') AND (isset($pol['nick']))) { redirect('/perfil/'.$pol['nick'].'/editar'); }
 if ((!$_GET['a']) AND (isset($pol['nick']))) { redirect('/perfil/'.$pol['nick']); }
 
-$result = sql("SELECT *, 
+$result = sql("SELECT *,
 (SELECT siglas FROM partidos WHERE pais = '".PAIS."' AND ID = users.partido_afiliado LIMIT 1) AS partido,
 (SELECT COUNT(ID) FROM ".SQL."foros_hilos WHERE user_ID = users.ID LIMIT 1) AS num_hilos,
 (SELECT COUNT(ID) FROM ".SQL."foros_msg WHERE user_ID = users.ID LIMIT 1) AS num_msg
-FROM users 
+FROM users
 WHERE nick = '".$_GET['a']."'
 LIMIT 1");
 while($r = r($result)){
@@ -27,7 +27,7 @@ while($r = r($result)){
 		redirect(vp_url('/perfil/'.$nick, $r['pais']));
 	} elseif ($user_ID) { // usuario ok
 
-		
+
 
 	if (($r['socio'] == 'true') AND (nucleo_acceso('socios'))) {
 		$result2 = sql("SELECT socio_ID, PAIS FROM socios WHERE pais = '".PAIS."' AND user_ID = '".$r['ID']."' LIMIT 1");
@@ -50,7 +50,7 @@ while($r = r($result)){
 <form action="'.accion_url($pol['pais']).'a=SC&b=nota&ID='.$r['ID'].'" method="post">
 <input type="text" name="nota_SC" size="25" maxlength="255" value="'.$r['nota_SC'].'" />
 '.boton(_('OK'), 'submit', false, 'pill small').'
-'.boton('&nbsp;', '/sc/filtro/user_ID/'.$r['ID'], false, 'blue small').' 
+'.boton('&nbsp;', '/sc/filtro/user_ID/'.$r['ID'], false, 'blue small').'
 '.boton('&nbsp;', '//'.strtolower($pol['pais']).'.'.DOMAIN.'/control/expulsiones/expulsar/'.$r['nick'], false, 'red small').'
 </form>
 </div>
@@ -70,8 +70,8 @@ if ($user_ID == $pol['user_ID']) { //es USER
 	while($r2 = r($result2)){ if ($r2['pols'] >= $pols) { $pols_afiliacion = $r2['valor']; } }
 
 	$text_limit = 1600 - strlen(strip_tags($r['text']));
-	
-	
+
+
 	$txt .= '<tr><td><p style="text-align:center;"><button onclick="$(\'#editarperfil\').slideToggle(\'slow\');" style="font-weight:bold;" class="pill">'._('Editar perfil').'</button> '.boton(_('Opciones de usuario'), REGISTRAR.'login.php?a=panel').' '.boton(_('Autentificación'), SSL_URL.'dnie.php').' '.($pol['pais']!='ninguno'?boton(_('Cambiar ciudadanía'), REGISTRAR, false, 'red').' ':'').'<p>
 
 
@@ -89,6 +89,9 @@ if ($user_ID == $pol['user_ID']) { //es USER
 </form></p>
 </fieldset>';
 
+ //   $placeholder_CEP = strlen(trim($r['CEP']))==0 ? 'CEP' : $r['CEP'];
+ //   $placeholder_logradouro = strlen(trim($r['Logradouro']))==0 ? 'Logradouro' : $r['Logradouro'];
+
 	$txt .= '
 <fieldset><legend>'._('Endereço').'</legend>
  <script>
@@ -102,10 +105,10 @@ if ($user_ID == $pol['user_ID']) { //es USER
     }
 
     function correiocontrolcep(valor){
-      if (valor.erro) {
-        alert("CEP não encontrado");
-        return;
-      };
+ //     if (valor.erro) {
+ //       alert("CEP não encontrado");
+ //       return;
+ //     };
       document.getElementById("logradouro").value=valor.logradouro
       document.getElementById("bairro").value=valor.bairro
       document.getElementById("localidade").value=valor.localidade
@@ -115,20 +118,20 @@ if ($user_ID == $pol['user_ID']) { //es USER
     </script>
 <form action="'.accion_url().'a=perfil&b=endereco" method="post">
 Informe CEP, número e complemento do endereço.
-<p><input type="text" name="CEP" value="" size="10" maxlength="8" placeholder="CEP" required onblur="atualizacep(this.value)" />  </p>
-<p><input type="text" id="logradouro" name="logradouro" value="" size="50" maxlength="50" placeholder="Logradouro" readonly />
-   <input type="text" name="numero" value="" size="8" maxlength="8" placeholder="Número" required />
-   <input type="text" name="complemento" value="" size="25" maxlength="25" placeholder="Complemento" required />  </p>
-<p><input type="text" id="bairro" name="bairro" value="" size="40" maxlength="40" placeholder="Bairro" readonly />
-   <input type="text" id="localidade" name="cidade" value="" size="40" maxlength="40" placeholder="Cidade" readonly />
-   <input type="text" id="uf" name="UF" value="" size="2" maxlength="2" placeholder="UF" readonly />  </p>
+<p><input type="text" name="CEP" value="'.$r['CEP'].'" size="10" maxlength="8" placeholder="CEP" required onblur="atualizacep(this.value)" />  </p>
+<p><input type="text" id="logradouro" name="logradouro" value="'.$r['Logradouro'].'" size="50" maxlength="50" placeholder="Logradouro" readonly />
+   <input type="text" name="numero" value="'.$r['Numero'].'" size="8" maxlength="8" placeholder="Número" required />
+   <input type="text" name="complemento" value="'.$r['Complemento'].'" size="25" maxlength="25" placeholder="Complemento" required />  </p>
+<p><input type="text" id="bairro" name="bairro" value="'.$r['Bairro'].'" size="40" maxlength="40" placeholder="Bairro" readonly />
+   <input type="text" id="localidade" name="cidade" value="'.$r['Cidade'].'" size="40" maxlength="40" placeholder="Cidade" readonly />
+   <input type="text" id="uf" name="UF" value="'.$r['UF'].'" size="2" maxlength="2" placeholder="UF" readonly />  </p>
  '.boton(_('Guardar'), 'submit', false, 'blue').'
 </form>
 </fieldset>';
 
 
 	if (ECONOMIA) {
-			
+
 	$result2 = sql("SELECT valor, dato FROM config WHERE pais = '".PAIS."' AND dato = 'impuestos' OR dato = 'impuestos_minimo'");
 	while($r2 = r($result2)){ $pol['config'][$r2['dato']] = $r2['valor']; }
 
@@ -354,7 +357,7 @@ if ((($user_ID != $pol['user_ID']) AND ($pol['user_ID']) AND ($pol['estado'] != 
 	while ($r2 = r($result2)) { $hay_v_c = $r2['voto']; }
 	if (!$hay_v_c) { $hay_v_c = '0'; }
 
-	$txt .= confianza($r['voto_confianza']).' 
+	$txt .= confianza($r['voto_confianza']).'
 <span id="data_confianza'.$user_ID.'" class="votar" type="confianza" name="'.$user_ID.'" value="'.$hay_v_c.'"></span><br />
 <span style="font-size:12px;">'._('Emitidos').' <b'.($num_votos <= VOTO_CONFIANZA_MAX?'':' style="color:red;"').'>'.$num_votos.'</b> '._('de').' '.VOTO_CONFIANZA_MAX.'</span>';
 } else { $txt .= confianza($r['voto_confianza']); }
@@ -426,7 +429,7 @@ Excepciones:
 * Veteranos (más de 2 años de antiguedad)
 */
 
-if ($r['fecha_registro'] < tiempo(365*2)) {  $txt .= _('Vitalicio').' ('._('veterano').')'; } 
+if ($r['fecha_registro'] < tiempo(365*2)) {  $txt .= _('Vitalicio').' ('._('veterano').')'; }
 elseif ($r['dnie'] == 'true') { $txt .= _('Vitalicio').' ('._('autentificado').')'; }
 elseif ($r['socio'] == 'true') { $txt .= _('Vitalicio').' ('._('asociado').')'; }
 elseif ($r['donacion'] > 0) { $txt .= _('Vitalicio').' ('._('donante').')'; }
@@ -483,7 +486,7 @@ $txt .= (count($txt_grupos)>0?implode(' ', $txt_grupos):_('Ninguno')).'</b></td>
 				$refs .= crear_link($r2['nick']) . ' </b>('.duracion($r2['online']).')<b><br />' . "\n";
 			}
 		}
-		if (ECONOMIA) { 
+		if (ECONOMIA) {
 			// empresas y partidos
 			$empresas_num = 0;
 			$result = sql("SELECT nombre, url, cat_ID, (SELECT url FROM cat WHERE pais = '".PAIS."' AND ID = empresas.cat_ID LIMIT 1) AS cat_url FROM empresas WHERE pais = '".PAIS."' AND user_ID = '".$r['ID']."' ORDER BY time DESC");
@@ -517,7 +520,7 @@ $txt_header .= '<style type="text/css">
 
 <script language="javascript">
 function limitChars(textid, limit, infodiv) {
-	var text = $("#"+textid).val(); 
+	var text = $("#"+textid).val();
 	var textlength = text.length;
 	if(textlength >= limit) {
 		$("#" + infodiv).html("<span style=\"color:red;\">0</span>");

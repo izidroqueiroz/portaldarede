@@ -182,7 +182,14 @@ case 'perfil':
 	} elseif ($_GET['b'] == 'nombre') {
 		sql("UPDATE users SET nombre = '".strip_tags($_POST['nombre'])."' WHERE ID = '".$pol['user_ID']."' LIMIT 1");
 	} elseif ($_GET['b'] == 'endereco') {
-		sql("UPDATE users SET CEP = '".strip_tags($_POST['CEP'])."' WHERE ID = '".$pol['user_ID']."' LIMIT 1");
+		sql("UPDATE users SET CEP = '".strip_tags($_POST['CEP'])."',
+		                      Logradouro = '".strip_tags($_POST['logradouro'])."',
+		                      Numero = '".strip_tags($_POST['numero'])."',
+		                      Complemento = '".strip_tags($_POST['complemento'])."',
+		                      Bairro = '".strip_tags($_POST['bairro'])."',
+		                      Cidade = '".strip_tags($_POST['cidade'])."',
+		                      UF = '".strip_tags($_POST['UF'])."'
+		WHERE ID = '".$pol['user_ID']."' LIMIT 1");
 	}
 	$refer_url = 'perfil/editar';
 	break;
